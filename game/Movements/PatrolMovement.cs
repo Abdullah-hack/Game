@@ -13,7 +13,7 @@ namespace game.Movements
     {
         private float leftBound;
         private float rightBound;
-        private float speed = 2f;
+        private float speed = 10f;
 
         public PatrolMovement(float left, float right)
         {

@@ -13,6 +13,8 @@ namespace game.Core
 
         public List<GameObject> Objects => objects;
 
+        public Size ScreenSize { get; set; }
+
         /// Add a game object to the scene.
         /// Encapsulation: Game manages the collection so external code doesn't manipulate the list directly.
         public void AddObject(GameObject obj)
@@ -26,6 +28,10 @@ namespace game.Core
         {
             foreach (var obj in objects.Where(o => o.IsActive))
             {
+                if (obj is Player player)
+                {
+                    player.ScreenSize = ScreenSize;
+                }
                 obj.Update(gameTime);
             }
         }

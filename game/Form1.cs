@@ -2,6 +2,7 @@ using game.Core;
 using game.Entities;
 using game.Movements;
 using game.Systems;
+using System.Numerics;
 using System.Resources;
 
 namespace game
@@ -27,12 +28,14 @@ namespace game
             //timer.Tick += timer1_Tick_1;
             timer1.Start();
         }
-        Image playerSprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player.png");
+        Image playerSprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\spaceship_enemy.png");
+        Image enemySprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\enemy\1.png");
+        Image bullet = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
         private void Setting()
         {
             game.AddObject(new Player
             {
-                Position = new PointF(100, 200),
+                Position = new PointF(100, 400),
                 Size = new Size(100, 100),
                 Sprite = playerSprite,
 
@@ -41,27 +44,36 @@ namespace game
 
             game.AddObject(new Player
             {
-                Position = new PointF(250, 100),
+                Position = new PointF(250, 200),
                 Size = new Size(100, 100),
-                //HasPhysics = true,
-                Movement = new PatrolMovement(left: 100, right: 500)
+                Sprite = enemySprite,
+                Movement = new PatrolMovement(left: 100, right: 200)
             });
 
-            // A physics enabled rigid player — will stop on collision and gravity will be disabled
             game.AddObject(new Player
             {
-                Position = new PointF(250, 350),
-                Size = new Size(40, 40),
-                IsRigidBody = true
+                Position = new PointF(450, 200),
+                Size = new Size(100, 100),
+                Sprite = enemySprite,
+                //HasPhysics = true,
+                Movement = new PatrolMovement(left: 300, right: 400)
             });
 
-            game.AddObject(new Enemy
-            {
-                //Position = new PointF(300, 100),
-                Position = new PointF(30, 10),
-                Size = new Size(50, 50),
-                HasPhysics = false // Enable physics with default gravity
-            });
+            //// A physics enabled rigid player — will stop on collision and gravity will be disabled
+            //game.AddObject(new Player
+            //{
+            //    Position = new PointF(250, 350),
+            //    Size = new Size(40, 40),
+            //    IsRigidBody = true
+            //});
+
+            //game.AddObject(new Enemy
+            //{
+            //    //Position = new PointF(300, 100),
+            //    Position = new PointF(30, 10),
+            //    Size = new Size(50, 50),
+            //    HasPhysics = false // Enable physics with default gravity
+            //});
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -72,6 +84,7 @@ namespace game
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
+            game.ScreenSize = ClientSize;
             // Update all game objects
             game.Update(new GameTime());
 
