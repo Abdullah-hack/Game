@@ -29,7 +29,7 @@ namespace game.Entities
         /// Custom draw: demonstrates polymorphism (override base draw to provide enemy visuals).
         public override void Draw(Graphics g)
         {
-            g.FillRectangle(Brushes.Red, Bounds);
+            base.Draw(g);
         }
 
         /// On collision, enemy deactivates when hit by bullets (encapsulation of reaction logic inside the entity).

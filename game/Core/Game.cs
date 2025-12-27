@@ -50,5 +50,7 @@ namespace game.Core
         {
             objects.RemoveAll(o => !o.IsActive);
         }
+
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿using game.Core;
+﻿using EZInput;
+using game.Core;
+using game.Extensions;
 using game.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,25 @@ namespace game.Entities
                 y = screenSize.Height - Size.Height;
 
             Position = new PointF(x, y);
+        }
+
+       public void Fire(Game game)
+       {
+            Bullet bullet = new Bullet();
+            bullet.Position = new PointF(
+            Position.X + Size.Width / 2 - bullet.Size.Width / 2, // center horizontally
+            Position.Y - bullet.Size.Height                        // spawn above the player
+            );
+
+            game.AddObject(bullet);
+        }
+
+        public void CheckFire(Game game)
+        {
+            if (EZInput.Keyboard.IsKeyPressed(Key.Space))
+            {
+                Fire(game);
+            }
         }
 
 
