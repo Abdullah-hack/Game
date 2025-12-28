@@ -5,6 +5,7 @@ using game.Movements;
 using game.Systems;
 using System.Numerics;
 using System.Resources;
+using System.Security.Policy;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace game
@@ -14,7 +15,7 @@ namespace game
         Game game = new Game();
         Player player = new Player
         {
-            Position = new PointF(100, 400),
+            Position = new PointF(1, 1),
             Size = new Size(100, 100),
             Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\spaceship_enemy.png"),
 
@@ -127,6 +128,21 @@ namespace game
 
             if (bgY2 >= background.Height)
                 bgY2 = -background.Height;
+
+
+
+
+            player.tickCount++;
+            if (player.tickCount >= player.frameDelay)
+            {
+                player.tickCount = 0;
+                player.currentFrame++;
+                if (player.currentFrame >= player.frameCount)
+                    player.currentFrame = 0;
+
+                player.Sprite = player.spaceshipFrames[player.currentFrame]; // update the sprite
+            }
+
 
 
         }

@@ -14,6 +14,23 @@ namespace game.Entities
     {
         // Movement strategy: demonstrates composition over inheritance.
         // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
+        public List<Image> spaceshipFrames = new List<Image>();
+        public int currentFrame = 0;
+        public int frameCount;
+        public int frameDelay = 5; // how many ticks per frame
+        public int tickCount = 0;
+
+        public Player()
+        {
+            spaceshipFrames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Animation\1.png"));
+            spaceshipFrames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Animation\2.png"));
+            spaceshipFrames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Animation\3.png"));
+            spaceshipFrames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Animation\4.png"));
+
+            frameCount = spaceshipFrames.Count;
+
+        }
+
         public IMovement? Movement { get; set; }
 
         public Size ScreenSize { get; set; }
@@ -45,7 +62,7 @@ namespace game.Entities
             Bullet bullet = new Bullet();
             bullet.Position = new PointF(
             Position.X + Size.Width / 2 - bullet.Size.Width / 2, // center horizontally
-            Position.Y - bullet.Size.Height                        // spawn above the player
+            Position.Y - bullet.Size.Height - 10                       // spawn above the player
             );
 
             game.AddObject(bullet);
