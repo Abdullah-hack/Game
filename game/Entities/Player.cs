@@ -60,9 +60,12 @@ namespace game.Entities
        public void Fire(Game game)
        {
             Bullet bullet = new Bullet();
+            bullet.Owner = this;
+            bullet.Velocity = new PointF(0, -30);
+            bullet.Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
             bullet.Position = new PointF(
             Position.X + Size.Width / 2 - bullet.Size.Width / 2, // center horizontally
-            Position.Y - bullet.Size.Height - 10                       // spawn above the player
+            Position.Y - bullet.Size.Height - 2                       // spawn above the player
             );
 
             game.AddObject(bullet);

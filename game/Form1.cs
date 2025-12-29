@@ -1,5 +1,6 @@
 using EZInput;
 using game.Core;
+using game.Effects;
 using game.Entities;
 using game.Movements;
 using game.Systems;
@@ -15,7 +16,7 @@ namespace game
         Game game = new Game();
         Player player = new Player
         {
-            Position = new PointF(1, 1),
+            Position = new PointF(100, 400),
             Size = new Size(100, 100),
             Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\spaceship_enemy.png"),
 
@@ -56,13 +57,13 @@ namespace game
             game.AddObject(player
             );
 
-            //game.AddObject(new Enemy
-            //{
-            //    Position = new PointF(250, 200),
-            //    Size = new Size(100, 100),
-            //    Sprite = enemySprite,
-            //    Movement = new PatrolMovement(left: 100, right: 200)
-            //});
+            game.AddObject(new Enemy
+            {
+                Position = new PointF(300, 200),
+                Size = new Size(100, 100),
+                Sprite = enemySprite,
+                Movement = new PatrolMovement(left: 100, right: 200)
+            });
 
             //game.AddObject(new Enemy
             //{
@@ -90,6 +91,74 @@ namespace game
             //});
         }
 
+        public void CheckExplosion()
+        {
+            foreach (var obj in game.Objects.ToList())
+            {
+                if (obj is Enemy enemy && enemy.IsDead && !enemy.HasExploded)
+                {
+                    // Spawn explosion
+                    Explosion explosion = new Explosion(enemy.Position);
+                    game.AddObject(explosion);
+
+                    // Mark explosion done
+                    enemy.HasExploded = true;
+
+                    // NOW deactivate enemy
+                    enemy.IsActive = false;
+                }
+            }
+        }
+
+        public void ScrollBackGround()
+        {
+            bgY1 += scrollSpeed;
+            bgY2 += scrollSpeed;
+
+            // Reset positions to loop background
+            if (bgY1 >= background.Height)
+                bgY1 = -background.Height;
+
+            if (bgY2 >= background.Height)
+                bgY2 = -background.Height;
+        }
+
+        public void ShipAnimation()
+        {
+            player.tickCount++;
+            if (player.tickCount >= player.frameDelay)
+            {
+                player.tickCount = 0;
+                player.currentFrame++;
+                if (player.currentFrame >= player.frameCount)
+                    player.currentFrame = 0;
+
+                player.Sprite = player.spaceshipFrames[player.currentFrame]; // update the sprite
+            }
+        }
+
+        public void EnemyFire()
+        {
+            foreach (var obj in game.Objects.ToList())
+            {
+                if (obj is Enemy enemy)
+                {
+                    enemy.FireCounter++;
+
+                    if (enemy.FireCounter >= enemy.FireRate)
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            enemy.Fire(game);
+                        }
+                        enemy.FireCounter = 0;
+                    }
+                }
+            }
+        }
+
+
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -104,6 +173,8 @@ namespace game
             game.ScreenSize = ClientSize;
 
             player.CheckFire(game);
+
+            CheckExplosion();
             // Update all game objects
             game.Update(new GameTime());
 
@@ -119,29 +190,21 @@ namespace game
             // Redraw the game
             Invalidate();
 
-            bgY1 += scrollSpeed;
-            bgY2 += scrollSpeed;
+            ScrollBackGround();
 
-            // Reset positions to loop background
-            if (bgY1 >= background.Height)
-                bgY1 = -background.Height;
+            ShipAnimation();
 
-            if (bgY2 >= background.Height)
-                bgY2 = -background.Height;
+            EnemyFire();
 
 
 
 
-            player.tickCount++;
-            if (player.tickCount >= player.frameDelay)
-            {
-                player.tickCount = 0;
-                player.currentFrame++;
-                if (player.currentFrame >= player.frameCount)
-                    player.currentFrame = 0;
 
-                player.Sprite = player.spaceshipFrames[player.currentFrame]; // update the sprite
-            }
+
+
+
+
+
 
 
 

@@ -10,10 +10,11 @@ namespace game.Extensions
 {
     public class Bullet : GameObject
     {
+        public GameObject Owner;
         public Bullet()
         {
-            Velocity = new PointF(0, -10); // move right
-            Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
+            //Velocity = new PointF(0, -10); // move upward
+            //Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
             Size = new Size(50, 30); // adjust as needed
         }
 
@@ -32,8 +33,13 @@ namespace game.Extensions
 
         public override void OnCollision(GameObject other)
         {
-            if (other is Enemy)
+
+            //if (other == Owner)
+            //    return;
+
+            if (other is Enemy || other is Player)
                 IsActive = false;
+
         }
     }
 
