@@ -13,7 +13,14 @@ namespace game
 {
     public partial class Form1 : Form
     {
+
         Game game = new Game();
+        LevelManager levelManager;
+
+        PhysicsSystem physics = new PhysicsSystem();
+        CollisionSystem collisions = new CollisionSystem();
+        Image background = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\background.png");
+
         Player player = new Player
         {
             Position = new PointF(100, 400),
@@ -22,9 +29,12 @@ namespace game
 
             Movement = new KeyboardMovement(),
         };
-        PhysicsSystem physics = new PhysicsSystem();
-        CollisionSystem collisions = new CollisionSystem();
-        //System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+
+        float bgY1 = 0;       // top position of first image
+        float bgY2;           // top position of second image
+        int scrollSpeed = 50;   // speed of background movement
+
+
 
         public Form1()
         {
@@ -32,77 +42,34 @@ namespace game
             DoubleBuffered = true;
             Setting();
             SetupTimer();
+            levelManager = new LevelManager(game);
+            levelManager.LoadLevel();
         }
 
         private void SetupTimer()
         {
-            timer1.Interval = 16; // ~60 FPS
-            //timer.Tick += timer1_Tick_1;
+            timer1.Interval = 16;
             timer1.Start();
             bgY2 = -background.Height; // second image starts just above the first
-
         }
 
-        Image playerSprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\spaceship_enemy.png");
-        Image enemySprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\enemy\1.png");
-        Image bullet = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
-        Image background = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\background.png");
-
-        float bgY1 = 0;       // top position of first image
-        float bgY2;           // top position of second image
-        int scrollSpeed = 50;   // speed of background movement
 
         private void Setting()
         {
-            game.AddObject(player
-            );
-
-            game.AddObject(new Enemy
-            {
-                Position = new PointF(300, 200),
-                Size = new Size(100, 100),
-                Sprite = enemySprite,
-                Movement = new PatrolMovement(left: 100, right: 200)
-            });
-
-            //game.AddObject(new Enemy
-            //{
-            //    Position = new PointF(450, 200),
-            //    Size = new Size(100, 100),
-            //    Sprite = enemySprite,
-            //    //HasPhysics = true,
-            //    Movement = new PatrolMovement(left: 300, right: 400)
-            //});
-
-            //// A physics enabled rigid player — will stop on collision and gravity will be disabled
-            //game.AddObject(new Player
-            //{
-            //    Position = new PointF(250, 350),
-            //    Size = new Size(40, 40),
-            //    IsRigidBody = true
-            //});
-
-            //game.AddObject(new Enemy
-            //{
-            //    //Position = new PointF(300, 100),
-            //    Position = new PointF(30, 10),
-            //    Size = new Size(50, 50),
-            //    HasPhysics = false // Enable physics with default gravity
-            //});
+            game.AddObject(player);
         }
 
         public void CheckExplosion()
         {
             foreach (var obj in game.Objects.ToList())
             {
-                if (obj is Enemy enemy && enemy.IsDead && !enemy.HasExploded)
+                if (obj is Enemy enemy && enemy.health <= 0)
                 {
                     // Spawn explosion
                     Explosion explosion = new Explosion(enemy.Position);
                     game.AddObject(explosion);
 
                     // Mark explosion done
-                    enemy.HasExploded = true;
 
                     // NOW deactivate enemy
                     enemy.IsActive = false;
@@ -143,15 +110,12 @@ namespace game
             {
                 if (obj is Enemy enemy)
                 {
-                    enemy.FireCounter++;
+                    enemy.fireTimer++;
 
-                    if (enemy.FireCounter >= enemy.FireRate)
+                    if (enemy.fireTimer >= enemy.fireRate)
                     {
-                        for (int i = 0; i < 5; i++)
-                        {
-                            enemy.Fire(game);
-                        }
-                        enemy.FireCounter = 0;
+                        enemy.Fire(game);
+                        enemy.fireTimer = 0;
                     }
                 }
             }
@@ -187,26 +151,15 @@ namespace game
             // Cleanup objects marked for removal
             game.Cleanup();
 
-            // Redraw the game
-            Invalidate();
+
+            EnemyFire();
 
             ScrollBackGround();
 
             ShipAnimation();
 
-            EnemyFire();
-
-
-
-
-
-
-
-
-
-
-
-
+            // Redraw the game
+            Invalidate();
 
         }
     }

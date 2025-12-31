@@ -23,10 +23,6 @@ namespace game.Effects
             Position = position;
             Size = new Size(200, 200);
 
-            HasPhysics = false;
-            IsRigidBody = false;
-            IsActive = true;
-
             frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Red Explosion\1_0.png"));
             frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Red Explosion\1_1.png"));
             frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\Red Explosion\1_2.png"));

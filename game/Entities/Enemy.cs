@@ -16,15 +16,18 @@ namespace game.Entities
         public IMovement? Movement { get; set; }
 
         // Default enemy velocity is set in constructor to give basic movement out-of-the-box.
+
+        public int health = 10;
+        public int fireRate = 100;
+        public int fireTimer = 0;
+
         public Enemy()
         {
             Velocity = new PointF(-2, 0);
         }
 
-        public int FireCounter = 0;
-        public int FireRate = 10; 
 
-        public void Fire(Game game)
+        public virtual void Fire(Game game)
         {
             Bullet bullet = new Bullet();
             bullet.Owner = this;
@@ -44,6 +47,7 @@ namespace game.Entities
 
             Movement?.Move(this, gameTime); // movement must be called
             base.Update(gameTime);
+            fireTimer++;
         }
 
         /// Custom draw: demonstrates polymorphism (override base draw to provide enemy visuals).
@@ -54,14 +58,21 @@ namespace game.Entities
 
         /// On collision, enemy deactivates when hit by bullets (encapsulation of reaction logic inside the entity).
 
-        public bool IsDead = false;
-        public bool HasExploded = false;
         public override void OnCollision(GameObject other)
         {
-            if (other is Bullet && !IsDead)
+            if (other is Bullet bullet && bullet.Owner is Enemy)
             {
-                IsDead = true; 
+                return;
             }
+            if (other is Bullet)
+            {
+                TakeDamage(1); 
+            }
+        }
+
+        public virtual void TakeDamage(int damage)
+        {
+            health -= damage;
         }
 
     }

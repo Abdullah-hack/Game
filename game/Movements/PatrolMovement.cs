@@ -20,7 +20,7 @@ namespace game.Movements
             leftBound = left;
             rightBound = right;
         }
-
+         
         public void Move(GameObject obj, GameTime gameTime)
         {
             obj.Position = new PointF(obj.Position.X + speed, obj.Position.Y);

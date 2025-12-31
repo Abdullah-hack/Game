@@ -91,6 +91,12 @@ namespace game.Systems
 
 
 
+
+
+
+
+
+
                         // Compute the intersection rectangle (axis-aligned overlap)
                         var overlap = RectangleF.Intersect(a.Bounds, b.Bounds);
                             if (overlap.Width > 0 && overlap.Height > 0)
