@@ -88,6 +88,11 @@ namespace game.Systems
                             continue;
                         }
 
+                        if (a is Enemy && b is Enemy)
+                        {
+                            continue;
+                        }
+
 
 
 

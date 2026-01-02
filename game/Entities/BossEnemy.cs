@@ -14,9 +14,9 @@ namespace game.Entities
         public BossEnemy() 
         {
             health = 100;
-            Size = new SizeF(200, 200);
-            fireRate = 300;
-            Movement = new PatrolMovement(100, 300);
+            Size = new SizeF(150, 170);
+            fireRate = 100;
+            //Movement = new PatrolMovement(100, 300);
             Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\enemy\1.png");
         }
 
@@ -28,7 +28,7 @@ namespace game.Entities
 
         public void RadialFire(Game game)
         {
-            float speed = 5f;
+            float speed = 20f;
 
             PointF[] directions =
             {

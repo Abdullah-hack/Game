@@ -23,8 +23,8 @@ namespace game
 
         Player player = new Player
         {
-            Position = new PointF(100, 400),
-            Size = new Size(100, 100),
+            Position = new PointF(650, 800),
+            Size = new Size(80, 110),
             Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\spaceship_enemy.png"),
 
             Movement = new KeyboardMovement(),
@@ -39,12 +39,19 @@ namespace game
         public Form1()
         {
             InitializeComponent();
+
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ClientSize = new Size(1080, 920);   // your game resolution
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
             DoubleBuffered = true;
             Setting();
             SetupTimer();
             levelManager = new LevelManager(game);
             levelManager.LoadLevel();
         }
+
+
 
         private void SetupTimer()
         {
@@ -129,7 +136,23 @@ namespace game
             g.DrawImage(background, 0, bgY1, ClientSize.Width, background.Height);
             g.DrawImage(background, 0, bgY2, ClientSize.Width, background.Height);
             game.Draw(e.Graphics);
+            DrawHUD(g);
         }
+
+
+        private void DrawHUD(Graphics g)
+        {
+            Font font = new Font("Arial", 16, FontStyle.Bold);
+            Brush brush = Brushes.White;
+
+            // Score (top-left)
+            g.DrawString($"Score: {player.Score}", font, brush, 20, 20);
+
+            // Health (below score)
+            g.DrawString($"Health: {player.Health}", font, brush, 20, 45);
+        }
+
+
 
 
         private void timer1_Tick_1(object sender, EventArgs e)
@@ -150,6 +173,12 @@ namespace game
 
             // Cleanup objects marked for removal
             game.Cleanup();
+
+            if (levelManager.CheckLevelComplete())  
+            {
+                levelManager.NextLevel();
+                levelManager.LoadLevel();
+            }
 
 
             EnemyFire();

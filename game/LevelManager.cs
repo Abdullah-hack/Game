@@ -1,11 +1,13 @@
 ﻿using game.Core;
 using game.Entities;
+using game.Interfaces;
 using game.Movements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.AxHost;
 
 namespace game
 {
@@ -23,15 +25,15 @@ namespace game
         {
             if (level == 1)
             {
-                SpawnLevel1();   
+                SpawnLevel1();
             }
             else if (level == 2)
             {
-                
+                SpawnLevel2();
             }
             else if (level == 3)
             {
-                
+                SpawnBossLevel();
             }
         }
 
@@ -41,27 +43,71 @@ namespace game
         }
         //gameObjects.Any(obj => obj is Enemy)
 
-        public void CheckLevelComplete()
+        public bool CheckLevelComplete()
         {
-            if (!game.Objects.Any(obj => obj is Enemy))
-                NextLevel();
+            if (!game.Objects.Any(obj => obj is Enemy enemy && enemy.IsActive))
+                return true;
+            else 
+                return false;
         }
 
         public void SpawnLevel1()
         {
-            game.AddObject(new BossEnemy());
+            int startY = -100;
 
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    game.AddObject(new Enemy
-            //    {
-            //        Position = new PointF(i * 100, 200),
-            //        Size = new Size(100, 100),
-            //        Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\enemy\1.png"),
-            //        Movement = new PatrolMovement(left: i * 100, right: i * 110)
-            //    });
-            //}
+            for (int i = 1; i < 4; i++)
+            {
+                float x = i * 90;
+                float targetY = i * 50;
+
+                Level1Enemy enemy = new Level1Enemy();
+                enemy.Position = new PointF(x, startY);
+                enemy.Velocity = new PointF(i * 2, 0);
+
+                IMovement patrol = new PatrolMovement(left: i * 100, right: i * 300);
+
+                enemy.Movement = new EntryMovement(targetY, speed: 2f, nextMovement: patrol);
+
+                game.AddObject(enemy);
+            }
+
         }
+
+        public void SpawnLevel2()
+        {
+            int startY = -100;
+
+            game.AddObject(new Level2Enemy
+            {
+                Position = new PointF(200, startY),
+                Velocity = new PointF(0, 0),
+                Movement = new EntryMovement(100, 2f, new ZigZagMovement(100, 400, 50)),
+            });
+
+            game.AddObject(new Level2Enemy
+            {
+                Position = new PointF(300, startY),
+                Velocity = new PointF(0, 0),
+                Movement = new EntryMovement(50, 2f, new ZigZagMovement(100, 700, 40)),
+            });
+
+            game.AddObject(new Level2Enemy
+            {
+                Position = new PointF(450, startY),
+                Velocity = new PointF(0, 0),
+                Movement = new EntryMovement(50, 2f, new ZigZagMovement(50, 800, 20)),
+            });
+        }
+
+        public void SpawnBossLevel()
+        {
+            game.AddObject(new BossEnemy
+            {
+                Position = new PointF(400, -100),
+                Velocity = new PointF(0, 0),
+                Movement = new EntryMovement(100, 2f, new ZigZagMovement(50, 900, 60)),
+            });
+        } 
 
 
     }

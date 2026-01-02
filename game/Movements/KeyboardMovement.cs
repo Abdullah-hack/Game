@@ -15,7 +15,7 @@ namespace game.Movements
 {
     public class KeyboardMovement : IMovement
     {
-        public float Speed { get; set; } = 15f;
+        public float Speed { get; set; } = 30f;
 
         public void Move(GameObject obj, GameTime gameTime)
         {

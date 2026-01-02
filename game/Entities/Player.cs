@@ -61,7 +61,7 @@ namespace game.Entities
        {
             Bullet bullet = new Bullet();
             bullet.Owner = this;
-            bullet.Velocity = new PointF(0, -30);
+            bullet.Velocity = new PointF(0,  -30);
             bullet.Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\player\bullet.png");
             bullet.Position = new PointF(
             Position.X + Size.Width / 2 - bullet.Size.Width / 2, // center horizontally
@@ -106,6 +106,9 @@ namespace game.Entities
         {
             if (other is Enemy)
                 Health -= 10;
+            if (other is Bullet bullet && bullet.Owner is Enemy)
+                Health -= 10;
+            
 
             //if (other is PowerUp)
             //    Health += 20;

@@ -23,7 +23,7 @@ namespace game.Entities
 
         public Enemy()
         {
-            Velocity = new PointF(-2, 0);
+            //Velocity = new PointF(-2, 0);
         }
 
 
