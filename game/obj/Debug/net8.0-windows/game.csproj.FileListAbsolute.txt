@@ -18,3 +18,4 @@ D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.pdb
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.genruntimeconfig.cache
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\ref\game.dll
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.sourcelink.json
+D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.MainForm.resources

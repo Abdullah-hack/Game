@@ -68,6 +68,7 @@ namespace game.Entities
             {
                 TakeDamage(1); 
             }
+
         }
 
         public virtual void TakeDamage(int damage)

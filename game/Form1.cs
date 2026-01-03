@@ -16,6 +16,7 @@ namespace game
 
         Game game = new Game();
         LevelManager levelManager;
+        FileHelper fileHelper;
 
         PhysicsSystem physics = new PhysicsSystem();
         CollisionSystem collisions = new CollisionSystem();
@@ -36,9 +37,10 @@ namespace game
 
 
 
-        public Form1()
+        public Form1(bool startNewGame)
         {
             InitializeComponent();
+
 
             this.StartPosition = FormStartPosition.CenterScreen;
             this.ClientSize = new Size(1080, 920);   // your game resolution
@@ -48,6 +50,20 @@ namespace game
             Setting();
             SetupTimer();
             levelManager = new LevelManager(game);
+            fileHelper = new FileHelper();
+
+            if (startNewGame)
+            {
+                player.Score = 0;
+                levelManager.level = 1;
+            }
+            else
+            {
+                List<string> list = fileHelper.Load();
+                player.Score = int.Parse(list[0]);
+                levelManager.level = int.Parse(list[1]);
+            }
+
             levelManager.LoadLevel();
         }
 
@@ -80,6 +96,7 @@ namespace game
 
                     // NOW deactivate enemy
                     enemy.IsActive = false;
+                    player.Score += 50;
                 }
             }
         }
@@ -176,8 +193,19 @@ namespace game
 
             if (levelManager.CheckLevelComplete())  
             {
-                levelManager.NextLevel();
-                levelManager.LoadLevel();
+                if (levelManager.CheckLevelComplete())
+                {
+                    fileHelper.Save(player.Score, levelManager.level);
+                    levelManager.NextLevel();
+                    levelManager.LoadLevel();
+                }
+            }
+
+            if (player.Health <= 0)
+            {
+                fileHelper.Save(player.Score, levelManager.level);
+                Application.Exit();
+                MessageBox.Show("Game Over!");
             }
 
 
