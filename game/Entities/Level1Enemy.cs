@@ -29,7 +29,7 @@ namespace game.Entities
         {
             Bullet bullet = new Bullet();
             bullet.Owner = this;
-            bullet.Velocity = new PointF(0, 40);
+            bullet.Velocity = new PointF(0, 20);
             bullet.Sprite = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\enemy\enemyBullet.png");
             bullet.Position = new PointF(
                 Position.X + Size.Width / 2 - bullet.Size.Width / 2,

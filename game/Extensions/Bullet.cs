@@ -34,9 +34,6 @@ namespace game.Extensions
         public override void OnCollision(GameObject other)
         {
 
-            //if (other == Owner)
-            //    return;
-
             if (other is Enemy || other is Player)
                 IsActive = false;
 

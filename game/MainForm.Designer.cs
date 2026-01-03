@@ -31,49 +31,79 @@
             newGameBtn = new Button();
             continueButton = new Button();
             exitBtn = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // newGameBtn
             // 
-            newGameBtn.Location = new Point(83, 342);
+            newGameBtn.BackColor = Color.FromArgb(0, 192, 0);
+            newGameBtn.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            newGameBtn.ForeColor = SystemColors.ActiveCaptionText;
+            newGameBtn.Location = new Point(268, 202);
+            newGameBtn.Margin = new Padding(5, 4, 5, 4);
             newGameBtn.Name = "newGameBtn";
-            newGameBtn.Size = new Size(112, 34);
+            newGameBtn.Size = new Size(293, 66);
             newGameBtn.TabIndex = 0;
             newGameBtn.Text = "New Game";
-            newGameBtn.UseVisualStyleBackColor = true;
+            newGameBtn.UseVisualStyleBackColor = false;
             newGameBtn.Click += newGameBtn_Click;
             // 
             // continueButton
             // 
-            continueButton.Location = new Point(264, 342);
+            continueButton.BackColor = Color.FromArgb(0, 192, 192);
+            continueButton.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            continueButton.ForeColor = SystemColors.ActiveCaptionText;
+            continueButton.Location = new Point(268, 304);
+            continueButton.Margin = new Padding(5, 4, 5, 4);
             continueButton.Name = "continueButton";
-            continueButton.Size = new Size(112, 34);
+            continueButton.Size = new Size(293, 60);
             continueButton.TabIndex = 1;
             continueButton.Text = "Continue";
-            continueButton.UseVisualStyleBackColor = true;
+            continueButton.UseVisualStyleBackColor = false;
             continueButton.Click += continueButton_Click;
             // 
             // exitBtn
             // 
-            exitBtn.Location = new Point(444, 342);
+            exitBtn.BackColor = Color.Red;
+            exitBtn.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            exitBtn.ForeColor = SystemColors.ActiveCaptionText;
+            exitBtn.Location = new Point(268, 398);
+            exitBtn.Margin = new Padding(5, 4, 5, 4);
             exitBtn.Name = "exitBtn";
-            exitBtn.Size = new Size(112, 34);
+            exitBtn.Size = new Size(293, 66);
             exitBtn.TabIndex = 2;
             exitBtn.Text = "Exit";
-            exitBtn.UseVisualStyleBackColor = true;
+            exitBtn.UseVisualStyleBackColor = false;
             exitBtn.Click += exitBtn_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(0, 0, 192);
+            label1.Font = new Font("Bernard MT Condensed", 28F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(223, 48);
+            label1.Name = "label1";
+            label1.Size = new Size(371, 67);
+            label1.TabIndex = 3;
+            label1.Text = "SPACE SHOOTER";
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(18F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            BackColor = Color.FromArgb(192, 192, 255);
+            BackgroundImage = Properties.Resources.image;
+            ClientSize = new Size(867, 553);
+            Controls.Add(label1);
             Controls.Add(exitBtn);
             Controls.Add(continueButton);
             Controls.Add(newGameBtn);
+            Font = new Font("Algerian", 14F, FontStyle.Bold);
+            Margin = new Padding(5, 4, 5, 4);
             Name = "MainForm";
             Text = "MainForm";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -81,5 +111,6 @@
         private Button newGameBtn;
         private Button continueButton;
         private Button exitBtn;
+        private Label label1;
     }
 }

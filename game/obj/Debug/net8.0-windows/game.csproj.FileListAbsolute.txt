@@ -19,3 +19,5 @@ D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.genruntimeconfig.c
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\ref\game.dll
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.sourcelink.json
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.MainForm.resources
+D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.LevelCompleteForm.resources
+D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.Properties.Resources.resources

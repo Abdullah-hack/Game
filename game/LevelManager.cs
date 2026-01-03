@@ -1,4 +1,5 @@
 ﻿using game.Core;
+using game.Effects;
 using game.Entities;
 using game.Interfaces;
 using game.Movements;
@@ -35,6 +36,8 @@ namespace game
             {
                 SpawnBossLevel();
             }
+            else
+                Application.Exit();
         }
 
         public void NextLevel()
@@ -45,7 +48,7 @@ namespace game
 
         public bool CheckLevelComplete()
         {
-            if (!game.Objects.Any(obj => obj is Enemy enemy && enemy.IsActive))
+            if (!game.Objects.Any(obj => obj is Enemy enemy && enemy.IsActive) && !game.Objects.Any(obj => obj is Explosion exp && exp.IsActive))
                 return true;
             else 
                 return false;

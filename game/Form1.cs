@@ -20,6 +20,7 @@ namespace game
 
         PhysicsSystem physics = new PhysicsSystem();
         CollisionSystem collisions = new CollisionSystem();
+
         Image background = Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\background.png");
 
         Player player = new Player
@@ -43,7 +44,7 @@ namespace game
 
 
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.ClientSize = new Size(1080, 920);   // your game resolution
+            this.ClientSize = new Size(1080, 920);   // game resolution
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             DoubleBuffered = true;
@@ -88,13 +89,9 @@ namespace game
             {
                 if (obj is Enemy enemy && enemy.health <= 0)
                 {
-                    // Spawn explosion
                     Explosion explosion = new Explosion(enemy.Position);
                     game.AddObject(explosion);
 
-                    // Mark explosion done
-
-                    // NOW deactivate enemy
                     enemy.IsActive = false;
                     player.Score += 50;
                 }
@@ -124,7 +121,7 @@ namespace game
                 if (player.currentFrame >= player.frameCount)
                     player.currentFrame = 0;
 
-                player.Sprite = player.spaceshipFrames[player.currentFrame]; // update the sprite
+                player.Sprite = player.spaceshipFrames[player.currentFrame];
             }
         }
 
@@ -162,11 +159,49 @@ namespace game
             Font font = new Font("Arial", 16, FontStyle.Bold);
             Brush brush = Brushes.White;
 
-            // Score (top-left)
             g.DrawString($"Score: {player.Score}", font, brush, 20, 20);
+            g.DrawString($"Health: {player.Health}", font, brush, 20, 50);
+            g.DrawString($"Level: {levelManager.level}", font, brush, 20, 80);
+        }
 
-            // Health (below score)
-            g.DrawString($"Health: {player.Health}", font, brush, 20, 45);
+
+        private void GameOver()
+        {
+            if (player.Health <= 0)
+            {
+                fileHelper.Save(player.Score, levelManager.level);
+                Application.Exit();
+                MessageBox.Show("Game Over!");
+            }
+        }
+
+
+        private void CheckLevelComplete()
+        {
+            if (levelManager.CheckLevelComplete())
+            {
+                timer1.Stop();
+
+                // Save progress
+                fileHelper.Save(player.Score, levelManager.level);
+
+                LevelCompleteForm levelForm = new LevelCompleteForm(player.Score);
+
+                DialogResult result = levelForm.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    levelManager.NextLevel();
+                    levelManager.LoadLevel();
+                    timer1.Start();
+                }
+                else if (result == DialogResult.Retry)
+                {
+                    MainForm main = new MainForm();
+                    main.Show();
+                    this.Close();
+                }
+            }
         }
 
 
@@ -179,44 +214,26 @@ namespace game
             player.CheckFire(game);
 
             CheckExplosion();
-            // Update all game objects
-            game.Update(new GameTime());
+            
+            game.Update(new GameTime());   // Update all game objects
+            
+            physics.Apply(game.Objects.ToList());   // Apply physics to all objects
+            
+            collisions.Check(game.Objects.ToList());   // Check for collisions between objects
 
-            // Apply physics to all objects
-            physics.Apply(game.Objects.ToList());
+            game.Cleanup();   // Cleanup objects marked for removal
 
-            // Check for collisions between objects
-            collisions.Check(game.Objects.ToList());
+            CheckLevelComplete();
 
-            // Cleanup objects marked for removal
-            game.Cleanup();
-
-            if (levelManager.CheckLevelComplete())  
-            {
-                if (levelManager.CheckLevelComplete())
-                {
-                    fileHelper.Save(player.Score, levelManager.level);
-                    levelManager.NextLevel();
-                    levelManager.LoadLevel();
-                }
-            }
-
-            if (player.Health <= 0)
-            {
-                fileHelper.Save(player.Score, levelManager.level);
-                Application.Exit();
-                MessageBox.Show("Game Over!");
-            }
-
+            GameOver();
 
             EnemyFire();
 
             ScrollBackGround();
 
             ShipAnimation();
-
-            // Redraw the game
-            Invalidate();
+         
+            Invalidate();   // Redraw the game
 
         }
     }

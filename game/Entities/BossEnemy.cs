@@ -28,17 +28,17 @@ namespace game.Entities
 
         public void RadialFire(Game game)
         {
-            float speed = 20f;
+            float speed = 30f;
 
             PointF[] directions =
             {
                 new PointF(0, 1),   
                 new PointF(1, 1),
-                new PointF(2, 1),  
+                new PointF(0.5f, 1),  
                 new PointF(-1, 1),
-                new PointF(-2, 1),
-                new PointF(-3, 1),
-                new PointF(3, 1),
+                new PointF(-0.5f, 1),
+                new PointF(-1.5f, 1),
+                new PointF(1.5f, 1),
                 };
 
             foreach (var dir in directions)

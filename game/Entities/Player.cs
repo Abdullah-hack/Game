@@ -12,8 +12,6 @@ namespace game.Entities
 {
     public class Player : GameObject
     {
-        // Movement strategy: demonstrates composition over inheritance.
-        // Different movement behaviors can be injected (KeyboardMovement, PatrolMovement, etc.).
         public List<Image> spaceshipFrames = new List<Image>();
         public int currentFrame = 0;
         public int frameCount;
