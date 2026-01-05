@@ -21,7 +21,7 @@ namespace game
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
 
-            scoreLabel.Text = $"Score: {score}";
+            //scoreLabel.Text = $"Score: {score}";
         }
 
         private void mainBtn_Click(object sender, EventArgs e)

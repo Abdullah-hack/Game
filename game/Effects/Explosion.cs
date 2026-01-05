@@ -45,6 +45,33 @@ namespace game.Effects
             Sprite = frames[0];
         }
 
+        public Explosion(PointF position, string anyThing)
+        {
+
+            Position = position;
+            Size = new Size(400, 400);
+
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_001.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_002.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_003.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_004.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_005.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_006.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_007.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_008.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_009.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_010.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_011.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_012.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_013.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_014.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_015.png"));
+            frames.Add(Image.FromFile(@"D:\smester 2\OOP\game\game\game\Resources\greenexplosion\Explosion_016.png"));
+
+            Sprite = frames[0];
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             counter++;

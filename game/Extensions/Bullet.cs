@@ -28,7 +28,7 @@ namespace game.Extensions
 
         public override void Draw(Graphics g)
         {
-            g.DrawImage(Sprite, Position.X, Position.Y, Size.Width, Size.Height);
+             g.DrawImage(Sprite, Position.X, Position.Y, Size.Width, Size.Height);
         }
 
         public override void OnCollision(GameObject other)

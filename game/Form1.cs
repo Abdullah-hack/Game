@@ -7,6 +7,7 @@ using game.Systems;
 using System.Numerics;
 using System.Resources;
 using System.Security.Policy;
+using game.Sounds;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace game
@@ -42,16 +43,11 @@ namespace game
         {
             InitializeComponent();
 
-
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.ClientSize = new Size(1080, 920);   // game resolution
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            DoubleBuffered = true;
-            Setting();
-            SetupTimer();
             levelManager = new LevelManager(game);
             fileHelper = new FileHelper();
+
+            DoubleBuffered = true;
+            SetupTimer();
 
             if (startNewGame)
             {
@@ -63,9 +59,8 @@ namespace game
                 List<string> list = fileHelper.Load();
                 player.Score = int.Parse(list[0]);
                 levelManager.level = int.Parse(list[1]);
-            }
-
-            levelManager.LoadLevel();
+            }            
+            Setting();
         }
 
 
@@ -74,13 +69,20 @@ namespace game
         {
             timer1.Interval = 16;
             timer1.Start();
-            bgY2 = -background.Height; // second image starts just above the first
         }
 
 
         private void Setting()
         {
             game.AddObject(player);
+
+            bgY2 = -background.Height; // second image starts just above the first
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.ClientSize = new Size(1080, 920);   // game resolution
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+            levelManager.LoadLevel();
+            SoundManager.PlayMusic(@"D:\smester 2\OOP\game\game\game\Resources\sounds\bg_music.mp3");
         }
 
         public void CheckExplosion()
@@ -89,8 +91,18 @@ namespace game
             {
                 if (obj is Enemy enemy && enemy.health <= 0)
                 {
-                    Explosion explosion = new Explosion(enemy.Position);
-                    game.AddObject(explosion);
+                    if (enemy is BossEnemy)
+                    {
+                        Explosion exp = new Explosion(enemy.Position, " ");
+                        game.AddObject(exp);
+                    }
+                    else
+                    {
+                        Explosion explosion = new Explosion(enemy.Position);
+                        game.AddObject(explosion);
+                    }
+
+                    SoundManager.PlayEffect(@"D:\smester 2\OOP\game\game\game\Resources\sounds\explosion.mp3");
 
                     enemy.IsActive = false;
                     player.Score += 50;
@@ -170,39 +182,59 @@ namespace game
             if (player.Health <= 0)
             {
                 fileHelper.Save(player.Score, levelManager.level);
-                Application.Exit();
-                MessageBox.Show("Game Over!");
+                GameOver gameOver = new GameOver();
+                gameOver.Show();
+                Close();
+                //MessageBox.Show("Game Over!");
             }
         }
 
 
         private void CheckLevelComplete()
         {
-            if (levelManager.CheckLevelComplete())
+            if (!levelManager.CheckLevelComplete())
+                return;
+
+            timer1.Stop();
+
+            int nextLevel;
+
+            // Decide next level
+            if (levelManager.level == 3) // Boss completed
             {
-                timer1.Stop();
+                nextLevel = 1;
+                fileHelper.Save(player.Score, nextLevel);
+                GameOver gameOver = new GameOver();
+                gameOver.Show();
+                Close();
+                return;
+            }
+            else
+                nextLevel = levelManager.level + 1;
 
-                // Save progress
-                fileHelper.Save(player.Score, levelManager.level);
+            // SAVE progress IMMEDIATELY
+            fileHelper.Save(player.Score, nextLevel);
 
-                LevelCompleteForm levelForm = new LevelCompleteForm(player.Score);
+            LevelCompleteForm levelForm =
+                new LevelCompleteForm(player.Score);
 
-                DialogResult result = levelForm.ShowDialog();
+            DialogResult result = levelForm.ShowDialog();
 
-                if (result == DialogResult.OK)
-                {
-                    levelManager.NextLevel();
-                    levelManager.LoadLevel();
-                    timer1.Start();
-                }
-                else if (result == DialogResult.Retry)
-                {
-                    MainForm main = new MainForm();
-                    main.Show();
-                    this.Close();
-                }
+            if (result == DialogResult.OK)
+            {
+                levelManager.level = nextLevel;
+                levelManager.LoadLevel();
+                timer1.Start();
+            }
+            else if (result == DialogResult.Retry)
+            {
+                MainForm main = new MainForm();
+                main.Show();
+                Close();
             }
         }
+
+
 
 
 

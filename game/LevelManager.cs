@@ -36,13 +36,11 @@ namespace game
             {
                 SpawnBossLevel();
             }
-            else
-                Application.Exit();
         }
 
         public void NextLevel()
         {
-            level++;
+            level++;    
         }
         //gameObjects.Any(obj => obj is Enemy)
 

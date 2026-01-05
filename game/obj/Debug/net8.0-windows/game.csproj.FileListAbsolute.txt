@@ -21,3 +21,11 @@ D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.sourcelink.json
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.MainForm.resources
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.LevelCompleteForm.resources
 D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.Properties.Resources.resources
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.Asio.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.Core.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.Midi.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+D:\smester 2\OOP\game\game\game\bin\Debug\net8.0-windows\NAudio.WinMM.dll
+D:\smester 2\OOP\game\game\game\obj\Debug\net8.0-windows\game.GameOver.resources

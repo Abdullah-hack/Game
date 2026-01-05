@@ -2,6 +2,7 @@
 using game.Core;
 using game.Extensions;
 using game.Interfaces;
+using game.Sounds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,6 +75,7 @@ namespace game.Entities
             if (EZInput.Keyboard.IsKeyPressed(Key.Space))
             {
                 Fire(game);
+                //SoundManager.PlayEffect(@"D:\smester 2\OOP\game\game\game\Resources\sounds\player_fire.mp3");
             }
         }
 

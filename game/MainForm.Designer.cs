@@ -36,8 +36,8 @@
             // 
             // newGameBtn
             // 
-            newGameBtn.BackColor = Color.FromArgb(0, 192, 0);
-            newGameBtn.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            newGameBtn.BackColor = Color.FromArgb(0, 192, 192);
+            newGameBtn.Font = new Font("Bernard MT Condensed", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
             newGameBtn.ForeColor = SystemColors.ActiveCaptionText;
             newGameBtn.Location = new Point(268, 202);
             newGameBtn.Margin = new Padding(5, 4, 5, 4);
@@ -50,8 +50,8 @@
             // 
             // continueButton
             // 
-            continueButton.BackColor = Color.FromArgb(0, 192, 192);
-            continueButton.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            continueButton.BackColor = Color.FromArgb(255, 192, 128);
+            continueButton.Font = new Font("Bernard MT Condensed", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             continueButton.ForeColor = SystemColors.ActiveCaptionText;
             continueButton.Location = new Point(268, 304);
             continueButton.Margin = new Padding(5, 4, 5, 4);
@@ -64,8 +64,8 @@
             // 
             // exitBtn
             // 
-            exitBtn.BackColor = Color.Red;
-            exitBtn.Font = new Font("Algerian", 14F, FontStyle.Bold);
+            exitBtn.BackColor = Color.OrangeRed;
+            exitBtn.Font = new Font("Bernard MT Condensed", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             exitBtn.ForeColor = SystemColors.ActiveCaptionText;
             exitBtn.Location = new Point(268, 398);
             exitBtn.Margin = new Padding(5, 4, 5, 4);
@@ -79,11 +79,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.FromArgb(0, 0, 192);
-            label1.Font = new Font("Bernard MT Condensed", 28F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(223, 48);
+            label1.BackColor = Color.DarkSalmon;
+            label1.Font = new Font("Bernard MT Condensed", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            label1.Location = new Point(175, 57);
             label1.Name = "label1";
-            label1.Size = new Size(371, 67);
+            label1.Size = new Size(475, 85);
             label1.TabIndex = 3;
             label1.Text = "SPACE SHOOTER";
             // 
@@ -91,8 +91,7 @@
             // 
             AutoScaleDimensions = new SizeF(18F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(192, 192, 255);
-            BackgroundImage = Properties.Resources.image;
+            BackColor = Color.CadetBlue;
             ClientSize = new Size(867, 553);
             Controls.Add(label1);
             Controls.Add(exitBtn);
